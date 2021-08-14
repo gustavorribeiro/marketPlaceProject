@@ -11,7 +11,7 @@ class CustomerController {
 
     @GetMapping
     fun getCustomer(): CustomerModel{
-        return CustomerModel("1", "Gustavo Ribeiro", "email@email.com")
+        return CustomerModel("1", "Gustavo", "email@email.com")
     }
 
 }
