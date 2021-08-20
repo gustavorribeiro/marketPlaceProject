@@ -25,23 +25,23 @@ class CustomerService {
         var id= if (customers.isEmpty()){
             1
         } else {
-            customers.last().id.toInt()+1
-        }.toString()
+            customers.last().id!!.toInt()+1
+        }
         customers.add(CustomerModel(id, customer.name, customer.email))
     }
 
-    fun getCustomer(id: String): CustomerModel {
+    fun getCustomer(id: Int): CustomerModel {
         return customers.filter { it.id == id }.first()
     }
 
-    fun update(id: String, customer: PostCustomerRequest) {
-        customers.filter { it.id == id }.first().let {
+    fun update(customer: CustomerModel) {
+        customers.filter { it.id == customer.id }.first().let {
             it.name= customer.name
             it.email= customer.email
         }
     }
 
-    fun delete(id: String) {
+    fun delete(id: Int) {
         customers.removeIf { it.id== id }
     }
 }
