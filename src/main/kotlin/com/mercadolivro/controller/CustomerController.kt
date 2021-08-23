@@ -22,7 +22,7 @@ class CustomerController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody customer: PostCustomerRequest) {
-        customerService.create(customer)
+        customerService.create(customer.toCustomerModel())
     }
 
     @GetMapping("/{id}")
@@ -38,7 +38,8 @@ class CustomerController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Int) {
+    fun delete(@PathVariable id: Int
+    ) {
         customerService.delete(id)
     }
 }

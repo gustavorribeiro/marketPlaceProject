@@ -1,6 +1,7 @@
 package com.mercadolivro.service
 
 import com.mercadolivro.model.CustomerModel
+import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.request.PostCustomerRequest
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
@@ -9,39 +10,36 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
 @Service
-class CustomerService {
-
-    val customers= mutableListOf<CustomerModel>()
+class CustomerService (
+    val customerRepository: CustomerRepository
+        ){
 
     @GetMapping
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
-            return customers.filter { it.name.contains(name, true) }
+            return customerRepository.findByNameContaining(it)
         }
-        return customers
+        return customerRepository.findAll().toList()
     }
 
-    fun create(customer: PostCustomerRequest) {
-        var id= if (customers.isEmpty()){
-            1
-        } else {
-            customers.last().id!!.toInt()+1
-        }
-        customers.add(CustomerModel(id, customer.name, customer.email))
+    fun create(customer: CustomerModel) {
+        customerRepository.save(customer)
     }
 
     fun getCustomer(id: Int): CustomerModel {
-        return customers.filter { it.id == id }.first()
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun update(customer: CustomerModel) {
-        customers.filter { it.id == customer.id }.first().let {
-            it.name= customer.name
-            it.email= customer.email
-        }
+
+        if(!customerRepository.existsById(customer.id!!))
+            throw Exception()
+        customerRepository.save(customer)
     }
 
     fun delete(id: Int) {
-        customers.removeIf { it.id== id }
+        if(!customerRepository.existsById(id))
+            throw Exception()
+        customerRepository.deleteById(id)
     }
 }
