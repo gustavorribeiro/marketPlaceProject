@@ -2,7 +2,7 @@ package com.mercadolivro.service
 
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.CustomerRepository
-import com.mercadolivro.request.PostCustomerRequest
+import com.mercadolivro.controller.request.PostCustomerRequest
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -26,7 +26,7 @@ class CustomerService (
         customerRepository.save(customer)
     }
 
-    fun getCustomer(id: Int): CustomerModel {
+    fun getById(id: Int): CustomerModel {
         return customerRepository.findById(id).orElseThrow()
     }
 
