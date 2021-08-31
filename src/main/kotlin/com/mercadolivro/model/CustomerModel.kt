@@ -1,5 +1,6 @@
 package com.mercadolivro.model
 
+import com.mercadolivro.enums.CustomerStatus
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -16,6 +17,9 @@ data class CustomerModel (
     var name: String,
 
     @Column
-    var email: String
+    var email: String,
+
+    @Column
+    var status: CustomerStatus
 
 )

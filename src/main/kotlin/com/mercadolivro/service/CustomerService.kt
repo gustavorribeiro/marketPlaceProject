@@ -3,6 +3,7 @@ package com.mercadolivro.service
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.controller.request.PostCustomerRequest
+import com.mercadolivro.enums.CustomerStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -41,6 +42,7 @@ class CustomerService (
     fun delete(id: Int) {
         val customer= findById(id)
         bookService.deleteByCustomer(customer)
-        customerRepository.deleteById(id)
+        customer.status= CustomerStatus.INATIVO
+        customerRepository.save(customer)
     }
 }
