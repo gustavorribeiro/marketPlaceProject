@@ -3,8 +3,10 @@ package com.mercadolivro.controller.request
 import com.fasterxml.jackson.annotation.JsonAlias
 import java.math.BigDecimal
 import javax.persistence.Id
+import javax.validation.constraints.NotEmpty
 
 data class PostBookRequest (
+
     var name: String,
 
     var price: BigDecimal,
